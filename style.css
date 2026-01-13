@@ -1,10 +1,15 @@
 /* =============================
    C-LUXURY — FINAL style.css
-   (Hero slider + dots + swipe + reveal)
+   (Menu + Hero slider + fixed CTA + locked dots + 4.5s timer ring
+    + Apple-like swipe section + scroll reveal)
    ============================= */
 
 /* RESET */
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 /* BASE */
 html, body { height: 100%; }
@@ -19,7 +24,9 @@ body {
 /* HEADER */
 .site-header {
   position: fixed;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   height: 80px;
   padding: 0 18px;
   display: flex;
@@ -37,6 +44,12 @@ body {
   text-transform: uppercase;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
 .icon-btn {
   width: 42px;
   height: 42px;
@@ -52,9 +65,7 @@ body {
 /* PAGE */
 .page { padding-top: 80px; }
 
-/* =============================
-   HERO
-============================= */
+/* HERO */
 .home-hero {
   position: relative;
   min-height: calc(100vh - 80px);
@@ -67,9 +78,8 @@ body {
   background-size: cover;
   background-position: center;
   opacity: 0;
-  transition: opacity 650ms ease;
+  transition: opacity 650ms ease-in-out;
 }
-
 .hero-bg.active { opacity: 1; }
 
 .hero-content {
@@ -82,7 +92,16 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
+}
+
+/* alignment */
+.hero-content.align-center { text-align: center; }
+.hero-content.align-right {
+  text-align: left;
+  align-items: flex-start;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: 6%;
 }
 
 .hero-title {
@@ -96,11 +115,11 @@ body {
   opacity: .82;
 }
 
-/* TEXT FADE */
+/* TEXT animation ONLY */
 .hero-title,
 .hero-subtext {
   opacity: 0;
-  transform: translateY(6px);
+  transform: translateY(4px);
   transition: opacity 650ms ease, transform 650ms ease;
 }
 
@@ -124,7 +143,7 @@ body {
 }
 
 /* =============================
-   HERO DOTS (LOCKED CENTER)
+   HERO DOTS (NO SHIFT, CENTERED)
 ============================= */
 .hero-dots {
   position: absolute;
@@ -146,7 +165,7 @@ body {
 }
 
 .hero-dot.active {
-  background: rgba(255,255,255,.85);
+  background: rgba(255,255,255,.78);
 }
 
 .hero-dot.active::after {
@@ -168,9 +187,7 @@ body {
 /* =============================
    SWIPE SECTION
 ============================= */
-.scroll-rail {
-  padding: 28px 18px 44px;
-}
+.scroll-rail { padding: 28px 18px 44px; }
 
 .scroll-rail__track {
   display: flex;
@@ -179,10 +196,7 @@ body {
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
 }
-
-.scroll-rail__track::-webkit-scrollbar {
-  display: none;
-}
+.scroll-rail__track::-webkit-scrollbar { display: none; }
 
 .scroll-card {
   width: min(78vw, 340px);
@@ -193,7 +207,7 @@ body {
 }
 
 /* =============================
-   SCROLL REVEAL (WORKING)
+   SCROLL REVEAL
 ============================= */
 .reveal {
   opacity: 0;
@@ -214,9 +228,10 @@ body {
 }
 
 /* =============================
-   NO-JS FALLBACK (SAFE)
+   SAFE FALLBACK if JS is disabled
 ============================= */
-.no-js .reveal {
+.no-js .reveal,
+.no-js .scroll-card {
   opacity: 1;
   transform: none;
 }
