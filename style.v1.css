@@ -1,0 +1,184 @@
+/* =============================
+   C-LUXURY — FINAL style.v1.css
+   ============================= */
+
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* BASE */
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  background: #fff;
+  color: #111;
+  overflow-x: hidden;
+}
+
+/* =============================
+   HEADER
+============================= */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  padding: 0 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  z-index: 2100;
+}
+
+.brand {
+  font-weight: 700;
+  letter-spacing: 3.5px;
+  font-size: 20px;
+  text-transform: uppercase;
+}
+
+.header-actions {
+  display: flex;
+  gap: 16px;
+}
+
+.icon-btn {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* =============================
+   MENU
+============================= */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s ease;
+}
+
+.overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.menu-panel {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  height: 100%;
+  width: 80%;
+  max-width: 380px;
+  background: #fff;
+  padding: 24px;
+  transition: right .4s ease;
+  z-index: 2100;
+}
+
+.menu-panel.open {
+  right: 0;
+}
+
+.close-btn {
+  background: none;
+  border: 0;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.drawer-nav a {
+  display: block;
+  padding: 16px 0;
+  border-bottom: 1px solid #eee;
+  text-decoration: none;
+  color: #111;
+}
+
+/* =============================
+   PAGE
+============================= */
+.page {
+  padding-top: 80px;
+}
+
+/* =============================
+   HERO
+============================= */
+.home-hero {
+  position: relative;
+  height: calc(100vh - 80px);
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity .65s ease;
+}
+
+.hero-bg.active {
+  opacity: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 48px 18px;
+}
+
+/* ALIGNMENTS */
+.hero-content.align-center {
+  align-items: center;
+  text-align: center;
+}
+
+.hero-content.align-right {
+  align-items: flex-end;
+  text-align: left;
+}
+
+/* TEXT ANIMATION */
+.hero-content h1,
+.hero-content p {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+
+.hero-content.is-in h1,
+.hero-content.is-in p {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* CTA */
+.hero-btn {
+  position: absolute;
+  bottom: 22%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 14px 32px;
+  border-radius: 999px;
+  background: rgba(255,
