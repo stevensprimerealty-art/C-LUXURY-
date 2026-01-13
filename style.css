@@ -227,11 +227,3 @@ body {
   .hero-dots { bottom: 18%; }
 }
 
-/* =============================
-   SAFE FALLBACK if JS is disabled
-============================= */
-.no-js .reveal,
-.no-js .scroll-card {
-  opacity: 1;
-  transform: none;
-}
