@@ -1,21 +1,16 @@
 /* ================================
-   C-LUXURY main.js (FINAL + SAFE)
+   C-LUXURY main.js (FINAL)
    - Menu open/close (X + overlay + Esc)
-   - Hero crossfade every 4.5s
+   - Hero crossfade every 4.5s (each image has its own text)
    - Dot timer ring restarts each slide
    - Search button opens Shopify search
-   - Scroll reveal (cinematic fade-up)
-   - Apple-like inertia swipe (drag/touch) for horizontal scroller
+   - Scroll reveal (cinematic fade-up) for .reveal
+   - Apple-like inertia swipe for #swipeTrack
    ================================ */
 
 document.addEventListener("DOMContentLoaded", () => {
   /* ----------------------------
-     MENU (open/close)
-     Matches your index:
-     - .menu-toggle
-     - .menu-panel
-     - #closeMenuBtn
-     - #overlay
+     MENU
   ---------------------------- */
   const menuBtn = document.querySelector(".menu-toggle");
   const menuPanel = document.querySelector(".menu-panel");
@@ -52,9 +47,8 @@ document.addEventListener("DOMContentLoaded", () => {
   closeBtn?.addEventListener("click", closeMenu);
   overlay?.addEventListener("click", closeMenu);
 
-  // Close menu when clicking any drawer link (optional but nice)
   document.querySelectorAll(".drawer-link").forEach((a) => {
-    a.addEventListener("click", () => closeMenu());
+    a.addEventListener("click", closeMenu);
   });
 
   document.addEventListener("keydown", (e) => {
@@ -63,10 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* ----------------------------
      HERO SLIDER (4.5s)
-     Matches your index:
-     - #homeHero
-     - .hero-bg (two layers)
-     - #heroContent #heroTitle #heroSubtext #heroDots
   ---------------------------- */
   const hero = document.getElementById("homeHero");
   const bgLayers = document.querySelectorAll(".hero-bg");
@@ -75,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const heroSubtext = document.getElementById("heroSubtext");
   const heroDotsWrap = document.getElementById("heroDots");
 
-  const HOLD_MS = 4500; // ✅ your rule
+  const HOLD_MS = 4500;
   const isMobile = () => window.matchMedia("(max-width: 768px)").matches;
 
   const HERO_SLIDES = [
@@ -129,7 +119,6 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   ];
 
-  // Preload images
   HERO_SLIDES.forEach((s) => {
     const img = new Image();
     img.src = s.image;
@@ -174,32 +163,28 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderHeroDots() {
     if (!heroDotsWrap) return;
 
-    heroDotsWrap.innerHTML = HERO_SLIDES.map((_, i) => {
-      return `<button class="hero-dot ${i === heroCurrent ? "active" : ""}" type="button" aria-label="Hero slide ${i + 1}"></button>`;
-    }).join("");
+    heroDotsWrap.innerHTML = HERO_SLIDES.map((_, i) =>
+      `<button class="hero-dot ${i === heroCurrent ? "active" : ""}" type="button" aria-label="Hero slide ${i + 1}"></button>`
+    ).join("");
 
     heroDotsWrap.querySelectorAll(".hero-dot").forEach((dot, i) => {
       dot.addEventListener("click", () => {
         heroCurrent = i;
         applyHeroSlide(heroCurrent);
-        updateActiveDot(true); // restart ring
+        updateActiveDot(true);
         startHeroAuto();
       });
     });
   }
 
-  // restartRing=true forces CSS animation restart on active dot
   function updateActiveDot(restartRing = false) {
     if (!heroDotsWrap) return;
 
     heroDotsWrap.querySelectorAll(".hero-dot").forEach((d, i) => {
       const shouldBeActive = i === heroCurrent;
-
-      // remove first so animation can restart clean
       d.classList.remove("active");
-
       if (shouldBeActive) {
-        if (restartRing) void d.offsetWidth; // force reflow
+        if (restartRing) void d.offsetWidth;
         d.classList.add("active");
       }
     });
@@ -214,37 +199,28 @@ document.addEventListener("DOMContentLoaded", () => {
     setTextOut();
 
     setTimeout(() => {
-      // background crossfade
       bgLayers[nextBg].style.backgroundImage = `url(${slide.image})`;
-      bgLayers[nextBg].style.backgroundPosition = isMobile()
-        ? slide.posMobile
-        : slide.posDesktop;
+      bgLayers[nextBg].style.backgroundPosition = isMobile() ? slide.posMobile : slide.posDesktop;
 
       bgLayers[nextBg].classList.add("active");
       bgLayers[activeBg].classList.remove("active");
       activeBg = nextBg;
 
-      // text swap (each image has its own text)
       setAlign(slide.align);
       heroTitle.innerHTML = slide.title;
       heroSubtext.innerHTML = slide.text || "";
 
-      requestAnimationFrame(() => setTextIn());
+      requestAnimationFrame(setTextIn);
     }, 180);
   }
 
-  // init hero
   if (hero && bgLayers[0] && bgLayers[1] && heroTitle && heroSubtext) {
     const first = HERO_SLIDES[0];
 
     bgLayers[0].style.backgroundImage = `url(${first.image})`;
     bgLayers[1].style.backgroundImage = `url(${first.image})`;
-    bgLayers[0].style.backgroundPosition = isMobile()
-      ? first.posMobile
-      : first.posDesktop;
-    bgLayers[1].style.backgroundPosition = isMobile()
-      ? first.posMobile
-      : first.posDesktop;
+    bgLayers[0].style.backgroundPosition = isMobile() ? first.posMobile : first.posDesktop;
+    bgLayers[1].style.backgroundPosition = isMobile() ? first.posMobile : first.posDesktop;
 
     setAlign(first.align);
     heroTitle.innerHTML = first.title;
@@ -255,19 +231,16 @@ document.addEventListener("DOMContentLoaded", () => {
     setTextIn();
     startHeroAuto();
 
-    // keep positions correct on resize
     window.addEventListener("resize", () => {
       const slide = HERO_SLIDES[heroCurrent];
       bgLayers.forEach((layer) => {
-        layer.style.backgroundPosition = isMobile()
-          ? slide.posMobile
-          : slide.posDesktop;
+        layer.style.backgroundPosition = isMobile() ? slide.posMobile : slide.posDesktop;
       });
     });
   }
 
   /* ----------------------------
-     SEARCH BUTTON (Shopify search)
+     SEARCH BUTTON
   ---------------------------- */
   const searchBtn = document.getElementById("searchBtn");
   searchBtn?.addEventListener("click", () => {
@@ -275,12 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   /* ----------------------------
-     SCROLL REVEAL (cinematic)
-     Usage:
-     Add class="reveal" to any section/card/text you want to animate in.
-     CSS should include something like:
-       .reveal{opacity:0; transform:translateY(16px); transition: ...}
-       .reveal.is-visible{opacity:1; transform:none;}
+     SCROLL REVEAL (for .reveal)
   ---------------------------- */
   const revealEls = document.querySelectorAll(".reveal");
   if (revealEls.length) {
@@ -300,22 +268,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ----------------------------
-     APPLE-LIKE INERTIA SWIPE (horizontal scroller)
-     Works if your swipe row exists, examples:
-       <div class="swipe-track" id="swipeTrack"> ...cards... </div>
-
-     - drag with mouse
-     - swipe with touch
-     - inertia glide on release
+     APPLE-LIKE INERTIA SWIPE
+     ✅ Targets your actual HTML: #swipeTrack
   ---------------------------- */
-  const swipeTrack = document.getElementById("swipeTrack") || document.querySelector(".swipe-track");
+  const swipeTrack = document.getElementById("swipeTrack");
 
   if (swipeTrack) {
     let isDown = false;
     let startX = 0;
     let startScrollLeft = 0;
 
-    // velocity / inertia
     let lastX = 0;
     let lastTime = 0;
     let velocity = 0;
@@ -328,11 +290,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const beginInertia = () => {
       stopInertia();
-      const friction = 0.94; // smaller = stops faster
-      const minV = 0.06; // minimum speed to stop
+      const friction = 0.94;
+      const minV = 0.06;
 
       const step = () => {
-        swipeTrack.scrollLeft -= velocity * 16; // 16ms-ish frame scale
+        swipeTrack.scrollLeft -= velocity * 16;
         velocity *= friction;
 
         if (Math.abs(velocity) > minV) {
@@ -345,7 +307,7 @@ document.addEventListener("DOMContentLoaded", () => {
       rafId = requestAnimationFrame(step);
     };
 
-    const setPointerDown = (clientX) => {
+    const pointerDown = (clientX) => {
       isDown = true;
       swipeTrack.classList.add("is-dragging");
       stopInertia();
@@ -358,73 +320,54 @@ document.addEventListener("DOMContentLoaded", () => {
       velocity = 0;
     };
 
-    const setPointerMove = (clientX) => {
+    const pointerMove = (clientX) => {
       if (!isDown) return;
 
-      const x = clientX;
-      const walk = x - startX;
+      const walk = clientX - startX;
       swipeTrack.scrollLeft = startScrollLeft - walk;
 
-      // compute velocity
       const now = performance.now();
       const dt = Math.max(1, now - lastTime);
-      const dx = x - lastX;
+      const dx = clientX - lastX;
 
-      // px per ms (smoothed a bit)
       const v = dx / dt;
       velocity = velocity * 0.7 + v * 0.3;
 
-      lastX = x;
+      lastX = clientX;
       lastTime = now;
     };
 
-    const setPointerUp = () => {
+    const pointerUp = () => {
       if (!isDown) return;
       isDown = false;
       swipeTrack.classList.remove("is-dragging");
       beginInertia();
     };
 
-    // Mouse
     swipeTrack.addEventListener("mousedown", (e) => {
-      // prevent dragging images/links
       e.preventDefault();
-      setPointerDown(e.clientX);
+      pointerDown(e.clientX);
     });
 
-    window.addEventListener("mousemove", (e) => setPointerMove(e.clientX));
-    window.addEventListener("mouseup", setPointerUp);
+    window.addEventListener("mousemove", (e) => pointerMove(e.clientX));
+    window.addEventListener("mouseup", pointerUp);
 
-    // Touch
-    swipeTrack.addEventListener(
-      "touchstart",
-      (e) => {
-        if (!e.touches || !e.touches[0]) return;
-        setPointerDown(e.touches[0].clientX);
-      },
-      { passive: true }
-    );
+    swipeTrack.addEventListener("touchstart", (e) => {
+      if (!e.touches?.[0]) return;
+      pointerDown(e.touches[0].clientX);
+    }, { passive: true });
 
-    swipeTrack.addEventListener(
-      "touchmove",
-      (e) => {
-        if (!e.touches || !e.touches[0]) return;
-        setPointerMove(e.touches[0].clientX);
-      },
-      { passive: true }
-    );
+    swipeTrack.addEventListener("touchmove", (e) => {
+      if (!e.touches?.[0]) return;
+      pointerMove(e.touches[0].clientX);
+    }, { passive: true });
 
-    swipeTrack.addEventListener("touchend", setPointerUp);
-    swipeTrack.addEventListener("mouseleave", setPointerUp);
+    swipeTrack.addEventListener("touchend", pointerUp);
+    swipeTrack.addEventListener("mouseleave", pointerUp);
 
-    // If user scrolls with trackpad, cancel inertia immediately
-    swipeTrack.addEventListener(
-      "wheel",
-      () => {
-        stopInertia();
-        velocity = 0;
-      },
-      { passive: true }
-    );
+    swipeTrack.addEventListener("wheel", () => {
+      stopInertia();
+      velocity = 0;
+    }, { passive: true });
   }
 });
