@@ -247,35 +247,26 @@ document.addEventListener("DOMContentLoaded", () => {
     window.open("https://mrcharliestxs.myshopify.com/search", "_blank", "noopener");
   });
 
-  /* ----------------------------
-     SCROLL REVEAL (cinematic)
-     Reveals .reveal AND .scroll-card by adding:
-       - .is-visible (for generic reveal items)
-       - .is-in (for scroll-card styling)
-  ---------------------------- */
-  const revealEls = document.querySelectorAll(".reveal, .scroll-card");
+/* ----------------------------
+   SCROLL REVEAL (cinematic)
+   Uses ONLY: .reveal + .is-visible
+---------------------------- */
+const revealEls = document.querySelectorAll(".reveal");
 
-  if (revealEls.length) {
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
+if (revealEls.length) {
+  const obs = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        obs.unobserve(entry.target);
+      });
+    },
+    { threshold: 0.15, rootMargin: "0px 0px -10% 0px" }
+  );
 
-          // scroll cards use .is-in (your CSS expects this)
-          if (entry.target.classList.contains("scroll-card")) {
-            entry.target.classList.add("is-in");
-          } else {
-            entry.target.classList.add("is-visible");
-          }
-
-          obs.unobserve(entry.target);
-        });
-      },
-      { threshold: 0.15, rootMargin: "0px 0px -10% 0px" }
-    );
-
-    revealEls.forEach((el) => obs.observe(el));
-  }
+  revealEls.forEach((el) => obs.observe(el));
+}
   /* ----------------------------
      APPLE-LIKE INERTIA SWIPE
      ✅ Targets your actual HTML: #swipeTrack
