@@ -73,19 +73,35 @@
 
   <!-- PAGE CONTENT (placeholder for now) -->
   <main class="page">
-    <section class="hero">
-      <div class="hero-inner">
-        <p class="hero-kicker">A NEW YEAR</p>
-        <h1 class="hero-title">Curated For You</h1>
-        <p class="hero-sub">We’ll add your hero images next.</p>
+<section class="home-hero" id="homeHero" aria-label="Home hero slider">
+  <!-- 2-layer crossfade backgrounds -->
+  <div class="hero-bg active" aria-hidden="true"></div>
+  <div class="hero-bg" aria-hidden="true"></div>
 
-        <a class="hero-cta"
-           href="https://mrcharliestxs.myshopify.com/collections/all"
-           target="_blank" rel="noopener">
-          Shop Now
-        </a>
-      </div>
-    </section>
+  <!-- cinematic overlay layer -->
+  <div class="home-cine" aria-hidden="true"></div>
+
+  <!-- Content -->
+  <div class="hero-content align-center is-in" id="heroContent">
+    <div class="brand-mark">
+      <h1 class="hero-title" id="heroTitle">A NEW YEAR<br>WITH PRESENCE</h1>
+    </div>
+
+    <p class="quiet hero-subtext" id="heroSubtext"></p>
+
+    <a
+      class="hero-btn hero-cta"
+      href="https://mrcharliestxs.myshopify.com/collections/all"
+      target="_blank"
+      rel="noopener"
+    >
+      Shop Now
+    </a>
+
+    <!-- Indicators -->
+    <div class="hero-dots" id="heroDots" aria-label="Hero dots"></div>
+  </div>
+</section>
   </main>
 
   <script src="js/main.js"></script>
