@@ -1,1 +1,93 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>C-LUXURY</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- HEADER -->
+  <header class="site-header" role="banner">
+    <div class="brand">C-LUXURY</div>
+
+    <div class="header-actions" aria-label="Header actions">
+      <button class="icon-btn" id="searchBtn" aria-label="Search">
+        <!-- Search icon -->
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M10 4a6 6 0 104.472 10.03l4.249 4.25 1.414-1.415-4.25-4.249A6 6 0 0010 4zm0 2a4 4 0 110 8 4 4 0 010-8z"/>
+        </svg>
+      </button>
+
+      <a class="icon-btn" id="cartBtn"
+         href="https://mrcharliestxs.myshopify.com/cart"
+         target="_blank" rel="noopener"
+         aria-label="Cart">
+        <!-- Cart icon -->
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M7 18a2 2 0 102 2 2 2 0 00-2-2zm10 0a2 2 0 102 2 2 2 0 00-2-2zM6.2 6l.4 2h13.7l-1.2 6H8.1L7.1 9H5V7h1.6l-.4-2H3V3h4.2z"/>
+        </svg>
+      </a>
+
+      <button class="icon-btn" id="menuBtn" aria-label="Open menu" aria-controls="menuDrawer" aria-expanded="false">
+        <!-- 3 dots horizontal -->
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 12a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zm4.5 0a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM15 12a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- MENU OVERLAY -->
+  <div class="overlay" id="overlay" hidden></div>
+
+  <!-- SLIDE MENU -->
+  <aside class="drawer" id="menuDrawer" aria-hidden="true">
+    <div class="drawer-top">
+      <div class="drawer-brand" aria-hidden="true">C-LUXURY</div>
+
+      <button class="close-btn" id="closeMenuBtn" aria-label="Close menu">
+        <span class="close-box">✕</span>
+      </button>
+    </div>
+
+    <nav class="drawer-nav" aria-label="Main menu">
+      <a href="#" class="drawer-link">WHAT'S NEW</a>
+      <a href="#" class="drawer-link">MEN</a>
+      <a href="#" class="drawer-link">WOMEN</a>
+      <a href="#" class="drawer-link">SNEAKERS</a>
+      <a href="#" class="drawer-link">ACCESSORIES</a>
+      <a href="#" class="drawer-link">GIFTS</a>
+      <a href="#" class="drawer-link">WISHLIST</a>
+
+      <div class="drawer-footer">
+        <a href="login.html" class="drawer-login">
+          <span class="user-ico" aria-hidden="true">👤</span>
+          Register / Login
+        </a>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- PAGE CONTENT (placeholder for now) -->
+  <main class="page">
+    <section class="hero">
+      <div class="hero-inner">
+        <p class="hero-kicker">A NEW YEAR</p>
+        <h1 class="hero-title">Curated For You</h1>
+        <p class="hero-sub">We’ll add your hero images next.</p>
+
+        <a class="hero-cta"
+           href="https://mrcharliestxs.myshopify.com/collections/all"
+           target="_blank" rel="noopener">
+          Shop Now
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
