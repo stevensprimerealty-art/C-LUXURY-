@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>C-LUXURY</title>
+  <link rel="stylesheet" href="style.v1.css" />
+</head>
+
+<body>
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="brand">C-LUXURY</div>
+
+    <div class="header-actions">
+      <button class="icon-btn" id="searchBtn" aria-label="Search">🔍</button>
+
+      <a class="icon-btn"
+         href="https://mrcharliestxs.myshopify.com/cart"
+         target="_blank"
+         aria-label="Cart">👜</a>
+
+      <button class="icon-btn menu-toggle" aria-label="Menu">•••</button>
+    </div>
+  </header>
+
+  <!-- MENU -->
+  <div class="overlay" id="overlay" hidden></div>
+
+  <aside class="menu-panel">
+    <button class="close-btn" id="closeMenuBtn">✕</button>
+    <nav class="drawer-nav">
+      <a href="#">WHAT’S NEW</a>
+      <a href="#">MEN</a>
+      <a href="#">WOMEN</a>
+      <a href="#">SNEAKERS</a>
+      <a href="#">ACCESSORIES</a>
+      <a href="#">GIFTS</a>
+      <a href="#">WISHLIST</a>
+    </nav>
+  </aside>
+
+  <!-- HERO -->
+  <main class="page">
+    <section class="home-hero">
+      <div class="hero-bg active"></div>
+      <div class="hero-bg"></div>
+
+      <div class="hero-content align-center is-in" id="heroContent">
+        <h1 id="heroTitle"></h1>
+        <p id="heroSubtext"></p>
+
+        <a class="hero-btn"
+           href="https://mrcharliestxs.myshopify.com/collections/all"
+           target="_blank">
+          Shop Now
+        </a>
+
+        <div class="hero-dots" id="heroDots"></div>
+      </div>
+    </section>
+
+    <!-- SCROLL RAIL -->
+    <section class="scroll-rail">
+      <header class="reveal">
+        <h2>C-LUXURY</h2>
+        <p>Create it. Share it. Get gifted.</p>
+      </header>
+
+      <div class="scroll-rail__track" id="swipeTrack">
+        <article class="scroll-card reveal"><img src="assets/images/hero/scroll-01.jpg"></article>
+        <article class="scroll-card reveal"><img src="assets/images/hero/scroll-02.jpg"></article>
+        <article class="scroll-card reveal"><img src="assets/images/hero/scroll-03.jpg"></article>
+        <article class="scroll-card reveal"><img src="assets/images/hero/scroll-04.jpg"></article>
+        <article class="scroll-card reveal"><img src="assets/images/hero/scroll-05.jpg"></article>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/main.js" defer></script>
+</body>
+</html>
