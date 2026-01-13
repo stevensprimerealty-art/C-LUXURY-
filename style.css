@@ -450,29 +450,23 @@ html.no-scroll body{
   letter-spacing:.4px;
 }
 
-/* ✅ SCROLL REVEAL (matches JS: .reveal + .is-visible) */
+/* =============================
+   SCROLL REVEAL (cinematic)
+============================= */
 .reveal{
   opacity:0;
-  transform:translateY(12px);
+  transform:translateY(14px) scale(.98);
   transition: transform 600ms ease, opacity 600ms ease;
 }
 
 .reveal.is-visible{
   opacity:1;
-  transform:translateY(0);
-}
-
-.scroll-card.reveal{
-  transform:translateY(12px) scale(.98);
-}
-
-.scroll-card.reveal.is-visible{
   transform:translateY(0) scale(1);
 }
 
-/* subtle hover */
+/* subtle hover (desktop only) */
 @media (hover:hover){
-  .scroll-card.reveal.is-visible:hover{
+  .reveal.is-visible:hover{
     transform:translateY(-6px) scale(1.01);
     box-shadow:0 30px 80px rgba(0,0,0,.22);
   }
