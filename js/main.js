@@ -1,14 +1,21 @@
 /* ================================
-   C-LUXURY main.js (FINAL)
-   - Menu open/close works (X works)
+   C-LUXURY main.js (FINAL + SAFE)
+   - Menu open/close (X + overlay + Esc)
    - Hero crossfade every 4.5s
    - Dot timer ring restarts each slide
-   - Shop Now button stays still
+   - Search button opens Shopify search
+   - Scroll reveal (cinematic fade-up)
+   - Apple-like inertia swipe (drag/touch) for horizontal scroller
    ================================ */
 
 document.addEventListener("DOMContentLoaded", () => {
   /* ----------------------------
      MENU (open/close)
+     Matches your index:
+     - .menu-toggle
+     - .menu-panel
+     - #closeMenuBtn
+     - #overlay
   ---------------------------- */
   const menuBtn = document.querySelector(".menu-toggle");
   const menuPanel = document.querySelector(".menu-panel");
@@ -18,9 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
   function openMenu() {
     if (!menuPanel) return;
     menuPanel.classList.add("open");
-    overlay?.classList.add("open");
-    if (overlay) overlay.hidden = false;
-
+    if (overlay) {
+      overlay.hidden = false;
+      overlay.classList.add("open");
+    }
     menuBtn?.setAttribute("aria-expanded", "true");
     menuPanel.setAttribute("aria-hidden", "false");
   }
@@ -28,9 +36,10 @@ document.addEventListener("DOMContentLoaded", () => {
   function closeMenu() {
     if (!menuPanel) return;
     menuPanel.classList.remove("open");
-    overlay?.classList.remove("open");
-    if (overlay) overlay.hidden = true;
-
+    if (overlay) {
+      overlay.classList.remove("open");
+      overlay.hidden = true;
+    }
     menuBtn?.setAttribute("aria-expanded", "false");
     menuPanel.setAttribute("aria-hidden", "true");
   }
@@ -43,12 +52,21 @@ document.addEventListener("DOMContentLoaded", () => {
   closeBtn?.addEventListener("click", closeMenu);
   overlay?.addEventListener("click", closeMenu);
 
+  // Close menu when clicking any drawer link (optional but nice)
+  document.querySelectorAll(".drawer-link").forEach((a) => {
+    a.addEventListener("click", () => closeMenu());
+  });
+
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeMenu();
   });
 
   /* ----------------------------
      HERO SLIDER (4.5s)
+     Matches your index:
+     - #homeHero
+     - .hero-bg (two layers)
+     - #heroContent #heroTitle #heroSubtext #heroDots
   ---------------------------- */
   const hero = document.getElementById("homeHero");
   const bgLayers = document.querySelectorAll(".hero-bg");
@@ -164,7 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
       dot.addEventListener("click", () => {
         heroCurrent = i;
         applyHeroSlide(heroCurrent);
-        updateActiveDot(true);
+        updateActiveDot(true); // restart ring
         startHeroAuto();
       });
     });
@@ -177,14 +195,11 @@ document.addEventListener("DOMContentLoaded", () => {
     heroDotsWrap.querySelectorAll(".hero-dot").forEach((d, i) => {
       const shouldBeActive = i === heroCurrent;
 
-      // remove first (so the ring animation can restart)
+      // remove first so animation can restart clean
       d.classList.remove("active");
 
       if (shouldBeActive) {
-        if (restartRing) {
-          // force reflow
-          void d.offsetWidth;
-        }
+        if (restartRing) void d.offsetWidth; // force reflow
         d.classList.add("active");
       }
     });
@@ -201,13 +216,15 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => {
       // background crossfade
       bgLayers[nextBg].style.backgroundImage = `url(${slide.image})`;
-      bgLayers[nextBg].style.backgroundPosition = isMobile() ? slide.posMobile : slide.posDesktop;
+      bgLayers[nextBg].style.backgroundPosition = isMobile()
+        ? slide.posMobile
+        : slide.posDesktop;
 
       bgLayers[nextBg].classList.add("active");
       bgLayers[activeBg].classList.remove("active");
       activeBg = nextBg;
 
-      // text swap
+      // text swap (each image has its own text)
       setAlign(slide.align);
       heroTitle.innerHTML = slide.title;
       heroSubtext.innerHTML = slide.text || "";
@@ -217,15 +234,21 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // init hero
-  if (hero && bgLayers[0] && bgLayers[1]) {
-    bgLayers[0].style.backgroundImage = `url(${HERO_SLIDES[0].image})`;
-    bgLayers[1].style.backgroundImage = `url(${HERO_SLIDES[0].image})`;
-    bgLayers[0].style.backgroundPosition = isMobile() ? HERO_SLIDES[0].posMobile : HERO_SLIDES[0].posDesktop;
-    bgLayers[1].style.backgroundPosition = isMobile() ? HERO_SLIDES[0].posMobile : HERO_SLIDES[0].posDesktop;
+  if (hero && bgLayers[0] && bgLayers[1] && heroTitle && heroSubtext) {
+    const first = HERO_SLIDES[0];
 
-    setAlign(HERO_SLIDES[0].align);
-    heroTitle.innerHTML = HERO_SLIDES[0].title;
-    heroSubtext.innerHTML = HERO_SLIDES[0].text || "";
+    bgLayers[0].style.backgroundImage = `url(${first.image})`;
+    bgLayers[1].style.backgroundImage = `url(${first.image})`;
+    bgLayers[0].style.backgroundPosition = isMobile()
+      ? first.posMobile
+      : first.posDesktop;
+    bgLayers[1].style.backgroundPosition = isMobile()
+      ? first.posMobile
+      : first.posDesktop;
+
+    setAlign(first.align);
+    heroTitle.innerHTML = first.title;
+    heroSubtext.innerHTML = first.text || "";
 
     renderHeroDots();
     updateActiveDot(true);
@@ -236,17 +259,172 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("resize", () => {
       const slide = HERO_SLIDES[heroCurrent];
       bgLayers.forEach((layer) => {
-        layer.style.backgroundPosition = isMobile() ? slide.posMobile : slide.posDesktop;
+        layer.style.backgroundPosition = isMobile()
+          ? slide.posMobile
+          : slide.posDesktop;
       });
     });
   }
 
   /* ----------------------------
      SEARCH BUTTON (Shopify search)
-     (opens Shopify search page)
   ---------------------------- */
   const searchBtn = document.getElementById("searchBtn");
   searchBtn?.addEventListener("click", () => {
     window.open("https://mrcharliestxs.myshopify.com/search", "_blank", "noopener");
   });
+
+  /* ----------------------------
+     SCROLL REVEAL (cinematic)
+     Usage:
+     Add class="reveal" to any section/card/text you want to animate in.
+     CSS should include something like:
+       .reveal{opacity:0; transform:translateY(16px); transition: ...}
+       .reveal.is-visible{opacity:1; transform:none;}
+  ---------------------------- */
+  const revealEls = document.querySelectorAll(".reveal");
+  if (revealEls.length) {
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            obs.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -10% 0px" }
+    );
+
+    revealEls.forEach((el) => obs.observe(el));
+  }
+
+  /* ----------------------------
+     APPLE-LIKE INERTIA SWIPE (horizontal scroller)
+     Works if your swipe row exists, examples:
+       <div class="swipe-track" id="swipeTrack"> ...cards... </div>
+
+     - drag with mouse
+     - swipe with touch
+     - inertia glide on release
+  ---------------------------- */
+  const swipeTrack = document.getElementById("swipeTrack") || document.querySelector(".swipe-track");
+
+  if (swipeTrack) {
+    let isDown = false;
+    let startX = 0;
+    let startScrollLeft = 0;
+
+    // velocity / inertia
+    let lastX = 0;
+    let lastTime = 0;
+    let velocity = 0;
+    let rafId = null;
+
+    const stopInertia = () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = null;
+    };
+
+    const beginInertia = () => {
+      stopInertia();
+      const friction = 0.94; // smaller = stops faster
+      const minV = 0.06; // minimum speed to stop
+
+      const step = () => {
+        swipeTrack.scrollLeft -= velocity * 16; // 16ms-ish frame scale
+        velocity *= friction;
+
+        if (Math.abs(velocity) > minV) {
+          rafId = requestAnimationFrame(step);
+        } else {
+          stopInertia();
+        }
+      };
+
+      rafId = requestAnimationFrame(step);
+    };
+
+    const setPointerDown = (clientX) => {
+      isDown = true;
+      swipeTrack.classList.add("is-dragging");
+      stopInertia();
+
+      startX = clientX;
+      startScrollLeft = swipeTrack.scrollLeft;
+
+      lastX = clientX;
+      lastTime = performance.now();
+      velocity = 0;
+    };
+
+    const setPointerMove = (clientX) => {
+      if (!isDown) return;
+
+      const x = clientX;
+      const walk = x - startX;
+      swipeTrack.scrollLeft = startScrollLeft - walk;
+
+      // compute velocity
+      const now = performance.now();
+      const dt = Math.max(1, now - lastTime);
+      const dx = x - lastX;
+
+      // px per ms (smoothed a bit)
+      const v = dx / dt;
+      velocity = velocity * 0.7 + v * 0.3;
+
+      lastX = x;
+      lastTime = now;
+    };
+
+    const setPointerUp = () => {
+      if (!isDown) return;
+      isDown = false;
+      swipeTrack.classList.remove("is-dragging");
+      beginInertia();
+    };
+
+    // Mouse
+    swipeTrack.addEventListener("mousedown", (e) => {
+      // prevent dragging images/links
+      e.preventDefault();
+      setPointerDown(e.clientX);
+    });
+
+    window.addEventListener("mousemove", (e) => setPointerMove(e.clientX));
+    window.addEventListener("mouseup", setPointerUp);
+
+    // Touch
+    swipeTrack.addEventListener(
+      "touchstart",
+      (e) => {
+        if (!e.touches || !e.touches[0]) return;
+        setPointerDown(e.touches[0].clientX);
+      },
+      { passive: true }
+    );
+
+    swipeTrack.addEventListener(
+      "touchmove",
+      (e) => {
+        if (!e.touches || !e.touches[0]) return;
+        setPointerMove(e.touches[0].clientX);
+      },
+      { passive: true }
+    );
+
+    swipeTrack.addEventListener("touchend", setPointerUp);
+    swipeTrack.addEventListener("mouseleave", setPointerUp);
+
+    // If user scrolls with trackpad, cancel inertia immediately
+    swipeTrack.addEventListener(
+      "wheel",
+      () => {
+        stopInertia();
+        velocity = 0;
+      },
+      { passive: true }
+    );
+  }
 });
