@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,25 +13,26 @@
     <div class="brand">C-LUXURY</div>
 
     <div class="header-actions" aria-label="Header actions">
+      <!-- Search icon (links to Shopify search) -->
       <button class="icon-btn" id="searchBtn" aria-label="Search">
-        <!-- Search icon -->
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M10 4a6 6 0 104.472 10.03l4.249 4.25 1.414-1.415-4.25-4.249A6 6 0 0010 4zm0 2a4 4 0 110 8 4 4 0 010-8z"/>
         </svg>
       </button>
 
-      <a class="icon-btn" id="cartBtn"
+      <!-- Cart -->
+      <a class="icon-btn"
          href="https://mrcharliestxs.myshopify.com/cart"
          target="_blank" rel="noopener"
          aria-label="Cart">
-        <!-- Cart icon -->
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M7 18a2 2 0 102 2 2 2 0 00-2-2zm10 0a2 2 0 102 2 2 2 0 00-2-2zM6.2 6l.4 2h13.7l-1.2 6H8.1L7.1 9H5V7h1.6l-.4-2H3V3h4.2z"/>
         </svg>
       </a>
 
-      <button class="icon-btn" id="menuBtn" aria-label="Open menu" aria-controls="menuDrawer" aria-expanded="false">
-        <!-- 3 dots horizontal -->
+      <!-- 3 dots horizontal (MENU) -->
+      <button class="icon-btn menu-toggle" id="menuBtn"
+              aria-label="Open menu" aria-controls="menuDrawer" aria-expanded="false">
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M6 12a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zm4.5 0a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM15 12a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z"/>
         </svg>
@@ -44,9 +44,9 @@
   <div class="overlay" id="overlay" hidden></div>
 
   <!-- SLIDE MENU -->
-  <aside class="drawer" id="menuDrawer" aria-hidden="true">
+  <aside class="drawer menu-panel" id="menuDrawer" aria-hidden="true">
     <div class="drawer-top">
-      <div class="drawer-brand" aria-hidden="true">C-LUXURY</div>
+      <div class="drawer-brand">C-LUXURY</div>
 
       <button class="close-btn" id="closeMenuBtn" aria-label="Close menu">
         <span class="close-box">✕</span>
@@ -71,37 +71,34 @@
     </nav>
   </aside>
 
-  <!-- PAGE CONTENT (placeholder for now) -->
+  <!-- PAGE CONTENT -->
   <main class="page">
-<section class="home-hero" id="homeHero" aria-label="Home hero slider">
-  <!-- 2-layer crossfade backgrounds -->
-  <div class="hero-bg active" aria-hidden="true"></div>
-  <div class="hero-bg" aria-hidden="true"></div>
+    <!-- HERO SLIDER -->
+    <section class="home-hero" id="homeHero" aria-label="Homepage hero">
+      <!-- 2-layer crossfade backgrounds -->
+      <div class="hero-bg active" aria-hidden="true"></div>
+      <div class="hero-bg" aria-hidden="true"></div>
 
-  <!-- cinematic overlay layer -->
-  <div class="home-cine" aria-hidden="true"></div>
+      <!-- cinematic overlay -->
+      <div class="home-cine" aria-hidden="true"></div>
 
-  <!-- Content -->
-  <div class="hero-content align-center is-in" id="heroContent">
-    <div class="brand-mark">
-      <h1 class="hero-title" id="heroTitle">A NEW YEAR<br>WITH PRESENCE</h1>
-    </div>
+      <!-- content -->
+      <div class="hero-content align-center is-in" id="heroContent">
+        <div class="brand-mark">
+          <h1 class="hero-title" id="heroTitle">A NEW YEAR<br>WITH PRESENCE</h1>
+        </div>
 
-    <p class="quiet hero-subtext" id="heroSubtext"></p>
+        <p class="quiet hero-subtext" id="heroSubtext"></p>
 
-    <a
-      class="hero-btn hero-cta"
-      href="https://mrcharliestxs.myshopify.com/collections/all"
-      target="_blank"
-      rel="noopener"
-    >
-      Shop Now
-    </a>
+        <a class="hero-btn hero-cta"
+           href="https://mrcharliestxs.myshopify.com/collections/all"
+           target="_blank" rel="noopener">
+          Shop Now
+        </a>
 
-    <!-- Indicators -->
-    <div class="hero-dots" id="heroDots" aria-label="Hero dots"></div>
-  </div>
-</section>
+        <div class="hero-dots" id="heroDots" aria-label="Hero slides"></div>
+      </div>
+    </section>
   </main>
 
   <script src="js/main.js"></script>
