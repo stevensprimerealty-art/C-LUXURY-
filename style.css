@@ -331,3 +331,78 @@ body{
   .hero-subtext,
   .hero-cta{ transition:none !important; }
 }
+
+/* ============================= */
+/* MENU BACKDROP + NO SCROLL     */
+/* (needed if JS uses .menu-backdrop + .no-scroll) */
+/* ============================= */
+.menu-backdrop{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.20);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .22s ease;
+  z-index:1100;
+}
+.menu-backdrop.open{
+  opacity:1;
+  pointer-events:auto;
+}
+
+/* lock page scroll when menu opens */
+.no-scroll,
+.no-scroll body{
+  overflow:hidden !important;
+}
+
+/* ============================= */
+/* HERO DOTS (slider indicators) */
+/* ============================= */
+.hero-dots{
+  position:relative;
+  z-index:4;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  margin-top:22px;
+}
+
+.hero-dot{
+  width:8px;
+  height:8px;
+  border-radius:999px;
+  border:0;
+  background:rgba(255,255,255,.45);
+  cursor:pointer;
+  padding:0;
+  transition:transform 250ms ease, background 250ms ease, opacity 250ms ease;
+  opacity:.9;
+}
+
+.hero-dot.active{
+  background:rgba(255,255,255,.95);
+  transform:scale(1.25);
+}
+
+.hero-dot:focus-visible{
+  outline:2px solid #fff;
+  outline-offset:4px;
+}
+
+/* ============================= */
+/* HERO TYPO (mobile tuning)     */
+/* ============================= */
+@media (max-width: 480px){
+  .brand-mark h1{ font-size:36px; }
+  .quiet{ font-size:13px; }
+}
+
+/* Optional: on small screens keep text centered even on "right" slides */
+@media (max-width: 768px){
+  .hero-content.align-right{
+    text-align:center;
+    margin:0 auto;
+  }
+}
