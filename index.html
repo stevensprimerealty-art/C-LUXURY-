@@ -13,7 +13,7 @@
     <div class="brand">C-LUXURY</div>
 
     <div class="header-actions" aria-label="Header actions">
-      <!-- Search icon (links to Shopify search) -->
+      <!-- Search -->
       <button class="icon-btn" id="searchBtn" aria-label="Search">
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M10 4a6 6 0 104.472 10.03l4.249 4.25 1.414-1.415-4.25-4.249A6 6 0 0010 4zm0 2a4 4 0 110 8 4 4 0 010-8z"/>
@@ -30,7 +30,7 @@
         </svg>
       </a>
 
-      <!-- 3 dots horizontal (MENU) -->
+      <!-- Menu -->
       <button class="icon-btn menu-toggle" id="menuBtn"
               aria-label="Open menu" aria-controls="menuDrawer" aria-expanded="false">
         <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -40,20 +40,19 @@
     </div>
   </header>
 
-  <!-- MENU OVERLAY -->
+  <!-- OVERLAY -->
   <div class="overlay" id="overlay" hidden></div>
 
-  <!-- SLIDE MENU -->
+  <!-- MENU -->
   <aside class="drawer menu-panel" id="menuDrawer" aria-hidden="true">
     <div class="drawer-top">
       <div class="drawer-brand">C-LUXURY</div>
-
       <button class="close-btn" id="closeMenuBtn" aria-label="Close menu">
         <span class="close-box">✕</span>
       </button>
     </div>
 
-    <nav class="drawer-nav" aria-label="Main menu">
+    <nav class="drawer-nav">
       <a href="#" class="drawer-link">WHAT'S NEW</a>
       <a href="#" class="drawer-link">MEN</a>
       <a href="#" class="drawer-link">WOMEN</a>
@@ -61,44 +60,86 @@
       <a href="#" class="drawer-link">ACCESSORIES</a>
       <a href="#" class="drawer-link">GIFTS</a>
       <a href="#" class="drawer-link">WISHLIST</a>
-
-      <div class="drawer-footer">
-        <a href="login.html" class="drawer-login">
-          <span class="user-ico" aria-hidden="true">👤</span>
-          Register / Login
-        </a>
-      </div>
     </nav>
   </aside>
 
-  <!-- PAGE CONTENT -->
+  <!-- PAGE -->
   <main class="page">
-    <!-- HERO SLIDER -->
-    <section class="home-hero" id="homeHero" aria-label="Homepage hero">
-      <!-- 2-layer crossfade backgrounds -->
-      <div class="hero-bg active" aria-hidden="true"></div>
-      <div class="hero-bg" aria-hidden="true"></div>
 
-      <!-- cinematic overlay -->
-      <div class="home-cine" aria-hidden="true"></div>
+    <!-- HERO -->
+    <section class="home-hero" id="homeHero">
+      <div class="hero-bg active"></div>
+      <div class="hero-bg"></div>
+      <div class="home-cine"></div>
 
-      <!-- content -->
       <div class="hero-content align-center is-in" id="heroContent">
-        <div class="brand-mark">
-          <h1 class="hero-title" id="heroTitle">A NEW YEAR<br>WITH PRESENCE</h1>
-        </div>
+        <h1 class="hero-title" id="heroTitle">
+          A NEW YEAR<br>WITH PRESENCE
+        </h1>
 
-        <p class="quiet hero-subtext" id="heroSubtext"></p>
+        <p class="hero-subtext" id="heroSubtext"></p>
 
-        <a class="hero-btn hero-cta"
+        <a class="hero-btn"
            href="https://mrcharliestxs.myshopify.com/collections/all"
            target="_blank" rel="noopener">
           Shop Now
         </a>
 
-        <div class="hero-dots" id="heroDots" aria-label="Hero slides"></div>
+        <div class="hero-dots" id="heroDots"></div>
       </div>
     </section>
+
+    <!-- ============================= -->
+    <!-- SCROLL TO SCROLL SECTION     -->
+    <!-- ============================= -->
+    <section class="scroll-rail">
+      <header class="scroll-rail__head">
+        <h2 class="scroll-rail__title">C-LUXURY</h2>
+        <p class="scroll-rail__sub">
+          Create it. Share it. Get gifted.
+        </p>
+      </header>
+
+      <div class="scroll-rail__track">
+
+        <article class="scroll-card">
+          <img src="assets/images/hero/scroll-01.jpg" alt="">
+          <div class="scroll-card__overlay">
+            <span>Wishlist</span>
+          </div>
+        </article>
+
+        <article class="scroll-card">
+          <img src="assets/images/hero/scroll-02.jpg" alt="">
+          <div class="scroll-card__overlay">
+            <span>Digital Gifts</span>
+          </div>
+        </article>
+
+        <article class="scroll-card">
+          <img src="assets/images/hero/scroll-03.jpg" alt="">
+          <div class="scroll-card__overlay">
+            <span>For Her</span>
+          </div>
+        </article>
+
+        <article class="scroll-card">
+          <img src="assets/images/hero/scroll-04.jpg" alt="">
+          <div class="scroll-card__overlay">
+            <span>For Him</span>
+          </div>
+        </article>
+
+        <article class="scroll-card">
+          <img src="assets/images/hero/scroll-05.jpg" alt="">
+          <div class="scroll-card__overlay">
+            <span>Special Items</span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
   </main>
 
   <script src="js/main.js"></script>
