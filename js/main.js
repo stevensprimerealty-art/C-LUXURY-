@@ -1,9 +1,11 @@
-/* ================================
-   C-LUXURY main.js (FINAL — FIXED)
-   ================================ */
+document.documentElement.classList.remove("no-js");
+
+/* =============================
+   C-LUXURY main.js (FINAL - FIXED)
+   ============================= */
 
 document.addEventListener("DOMContentLoaded", () => {
-
+  // rest of your code stays EXACTLY the same
   /* =============================
      MENU
   ============================= */
