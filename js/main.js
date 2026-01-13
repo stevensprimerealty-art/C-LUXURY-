@@ -248,17 +248,27 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   /* ----------------------------
-     SCROLL REVEAL (for .reveal)
+     SCROLL REVEAL (cinematic)
+     Reveals .reveal AND .scroll-card by adding:
+       - .is-visible (for generic reveal items)
+       - .is-in (for scroll-card styling)
   ---------------------------- */
-  const revealEls = document.querySelectorAll(".reveal");
+  const revealEls = document.querySelectorAll(".reveal, .scroll-card");
+
   if (revealEls.length) {
     const obs = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
+          if (!entry.isIntersecting) return;
+
+          // scroll cards use .is-in (your CSS expects this)
+          if (entry.target.classList.contains("scroll-card")) {
+            entry.target.classList.add("is-in");
+          } else {
             entry.target.classList.add("is-visible");
-            obs.unobserve(entry.target);
           }
+
+          obs.unobserve(entry.target);
         });
       },
       { threshold: 0.15, rootMargin: "0px 0px -10% 0px" }
@@ -266,7 +276,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     revealEls.forEach((el) => obs.observe(el));
   }
-
   /* ----------------------------
      APPLE-LIKE INERTIA SWIPE
      ✅ Targets your actual HTML: #swipeTrack
