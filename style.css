@@ -462,14 +462,21 @@ html.no-scroll body{
   transform:translateY(0);
 }
 
+.scroll-card.reveal{
+  transform:translateY(12px) scale(.98);
+}
+
+.scroll-card.reveal.is-visible{
+  transform:translateY(0) scale(1);
+}
+
 /* subtle hover */
 @media (hover:hover){
-  .scroll-card:hover{
+  .scroll-card.reveal.is-visible:hover{
     transform:translateY(-6px) scale(1.01);
     box-shadow:0 30px 80px rgba(0,0,0,.22);
   }
 }
-
 /* MOBILE */
 @media (max-width: 768px){
   .hero-title{ font-size:30px; }
