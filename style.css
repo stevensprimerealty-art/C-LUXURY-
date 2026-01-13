@@ -244,3 +244,10 @@ body{
   opacity: 1;
   transform: none;
 }
+
+/* FORCE VISIBILITY — TEMP FIX */
+.reveal,
+.scroll-card {
+  opacity: 1 !important;
+  transform: none !important;
+}
