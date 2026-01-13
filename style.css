@@ -137,52 +137,63 @@ body{
 }
 
 /* =============================
-   HERO DOTS — LOCKED CENTER
+   HERO DOTS (NO SHIFT, CENTERED)
 ============================= */
-.hero-dots{
-  position:absolute;
-  left:50%;
-  bottom:16%;
-  transform:translate3d(-50%,0,0); /* 🔒 NO SHIFT */
-
-  display:flex;
-  gap:10px;
-  justify-content:center;
-  align-items:center;
-
-  opacity:0;
-  transition:opacity 650ms ease;
+.hero-dots {
+  position: absolute;
+  left: 50%;
+  bottom: 16%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  pointer-events: auto;
 }
 
-.hero-content.is-in .hero-dots{
-  opacity:1;
+.hero-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.35);
+  border: none;
+  padding: 0;
+  position: relative;
+  flex: 0 0 10px; /* 🔒 LOCK SIZE */
 }
 
-.hero-dot{
-  width:10px;
-  height:10px;
-  flex:0 0 10px; /* 🔒 PREVENT LAYOUT SHIFT */
-  border-radius:999px;
-  background:rgba(255,255,255,.35);
-  border:0;
-  cursor:pointer;
-  position:relative;
+.hero-dot.active {
+  background: rgba(255,255,255,.85);
 }
 
-.hero-dot.active{ background:rgba(255,255,255,.78); }
-
-.hero-dot.active::after{
-  content:"";
-  position:absolute;
-  inset:-6px;
-  border-radius:999px;
-  background:conic-gradient(#fff 0turn, transparent 0turn);
-  mask:radial-gradient(transparent calc(100% - 2px), #000 calc(100% - 2px));
-  animation:dotProgress 4.5s linear forwards;
+/* ring does NOT affect layout */
+.hero-dot::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
 }
 
-@keyframes dotProgress{
-  to{ background:conic-gradient(#fff 1turn, transparent 1turn); }
+.hero-dot.active::after {
+  opacity: 1;
+  animation: dotProgress 4.5s linear forwards;
+}
+
+@keyframes dotProgress {
+  from {
+    background: conic-gradient(
+      rgba(255,255,255,.95) 0turn,
+      transparent 0turn
+    );
+  }
+  to {
+    background: conic-gradient(
+      rgba(255,255,255,.95) 1turn,
+      transparent 1turn
+    );
+  }
 }
 
 /* =============================
