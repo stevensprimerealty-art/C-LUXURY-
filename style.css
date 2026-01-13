@@ -1,6 +1,7 @@
 /* =============================
    C-LUXURY — FINAL style.css
    (Menu + Hero slider + 4.5s timer dots)
+   Matches your index.html + main.js
    ============================= */
 
 /* ============================= */
@@ -20,6 +21,12 @@ body{
   overflow-x:hidden;
 }
 
+/* ✅ Correct no-scroll lock (your JS should toggle: document.documentElement.classList.add/remove("no-scroll")) */
+html.no-scroll,
+html.no-scroll body{
+  overflow:hidden;
+}
+
 /* ============================= */
 /* HEADER                        */
 /* ============================= */
@@ -33,7 +40,7 @@ body{
   justify-content:space-between;
   background:#fff;
   border-bottom:1px solid #eee;
-  z-index:1000;
+  z-index:2100; /* ✅ above overlay + drawer */
 }
 
 .brand{
@@ -90,8 +97,9 @@ body{
   opacity:0;
   pointer-events:none;
   transition:opacity .22s ease;
-  z-index:1100;
+  z-index:1900; /* ✅ below drawer */
 }
+
 .overlay.open{
   opacity:1;
   pointer-events:auto;
@@ -106,9 +114,11 @@ body{
   background:#fff;
   transform:translateX(100%);
   transition:transform .28s ease;
-  z-index:1200;
+  z-index:2000; /* ✅ above overlay */
   border-left:1px solid #eee;
+  will-change:transform;
 }
+
 .drawer.open{ transform:translateX(0); }
 
 .drawer-top{
@@ -161,6 +171,7 @@ body{
   letter-spacing:1px;
   text-transform:uppercase;
 }
+
 .drawer-link::after{
   content:"›";
   opacity:.45;
@@ -181,9 +192,6 @@ body{
 
 .user-ico{ font-size:18px; }
 
-/* optional: lock scroll when menu open */
-.no-scroll body{ overflow:hidden; }
-
 /* ============================= */
 /* HERO SLIDER                   */
 /* ============================= */
@@ -198,6 +206,7 @@ body{
   text-align:center;
 }
 
+/* 2-layer crossfade backgrounds */
 .hero-bg{
   position:absolute;
   inset:0;
@@ -208,6 +217,7 @@ body{
   transition:opacity 650ms ease-in-out;
   z-index:0;
 }
+
 .hero-bg.active{ opacity:1; }
 
 /* darker cinematic layer */
@@ -225,7 +235,7 @@ body{
   );
 }
 
-/* cinematic overlay layer */
+/* extra cinematic overlay */
 .home-cine{
   position:absolute;
   inset:0;
@@ -238,7 +248,7 @@ body{
       rgba(0,0,0,.76) 100%);
 }
 
-/* content */
+/* content layer */
 .hero-content{
   position:relative;
   z-index:3;
@@ -252,6 +262,7 @@ body{
   max-width:760px;
   margin:0 auto;
 }
+
 .hero-content.align-right{
   text-align:left;
   max-width:520px;
@@ -275,18 +286,20 @@ body{
   max-width:520px;
 }
 
-/* make the title/subtext fade in/out (NOT the button) */
+/* Fade ONLY title + subtext (Shop Now stays still) */
 .hero-title,
 .hero-subtext{
   opacity:0;
   transform:translateY(4px);
   transition:opacity 650ms ease, transform 650ms ease;
 }
+
 .hero-content.is-in .hero-title,
 .hero-content.is-in .hero-subtext{
   opacity:1;
   transform:translateY(0);
 }
+
 .hero-content.is-out .hero-title,
 .hero-content.is-out .hero-subtext{
   opacity:0;
@@ -338,7 +351,7 @@ body{
   background:rgba(255,255,255,.75);
 }
 
-/* ring timer */
+/* ring timer (restarts when JS re-adds .active) */
 .hero-dot.active::after{
   content:"";
   position:absolute;
