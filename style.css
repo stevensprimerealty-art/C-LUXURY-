@@ -1,6 +1,6 @@
 /* =============================
    C-LUXURY — FINAL style.css
-   Clean, no duplicates, ready to paste
+   (Menu + Hero slider + 4.5s timer dots)
    ============================= */
 
 /* ============================= */
@@ -109,11 +109,8 @@ body{
   z-index:1200;
   border-left:1px solid #eee;
 }
-.drawer.open{
-  transform:translateX(0);
-}
+.drawer.open{ transform:translateX(0); }
 
-/* Drawer top row */
 .drawer-top{
   height:80px;
   display:flex;
@@ -128,10 +125,9 @@ body{
   letter-spacing:3px;
   text-transform:uppercase;
   font-size:16px;
-  opacity:1; /* ✅ visible */
+  opacity:1;
 }
 
-/* Close X inside a box */
 .close-btn{
   border:0;
   background:transparent;
@@ -151,7 +147,6 @@ body{
   color:#111;
 }
 
-/* Menu links */
 .drawer-nav{ padding:14px 0 20px; }
 
 .drawer-link{
@@ -172,7 +167,6 @@ body{
   font-size:20px;
 }
 
-/* Footer login */
 .drawer-footer{ padding:18px; }
 
 .drawer-login{
@@ -187,24 +181,11 @@ body{
 
 .user-ico{ font-size:18px; }
 
-/* ============================= */
-/* HERO ALIGNMENTS               */
-/* ============================= */
-.hero-content.align-center{
-  text-align:center;
-  max-width:760px;
-  margin:0 auto;
-}
-
-.hero-content.align-right{
-  text-align:left;
-  max-width:520px;
-  margin-left:auto;
-  margin-right:6%;
-}
+/* optional: lock scroll when menu open */
+.no-scroll body{ overflow:hidden; }
 
 /* ============================= */
-/* HERO SLIDER (matches your HTML) */
+/* HERO SLIDER                   */
 /* ============================= */
 .home-hero{
   position:relative;
@@ -212,7 +193,7 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:60px 18px;
+  padding:60px 18px 70px;
   overflow:hidden;
   text-align:center;
 }
@@ -229,6 +210,7 @@ body{
 }
 .hero-bg.active{ opacity:1; }
 
+/* darker cinematic layer */
 .home-hero::after{
   content:"";
   position:absolute;
@@ -237,9 +219,9 @@ body{
   pointer-events:none;
   background:linear-gradient(
     to top,
-    rgba(0,0,0,.55) 0%,
-    rgba(0,0,0,.22) 55%,
-    rgba(0,0,0,.12) 100%
+    rgba(0,0,0,.62) 0%,
+    rgba(0,0,0,.28) 55%,
+    rgba(0,0,0,.18) 100%
   );
 }
 
@@ -251,15 +233,12 @@ body{
   pointer-events:none;
   background:
     radial-gradient(120% 90% at 50% 40%,
-      rgba(0,0,0,.10) 0%,
-      rgba(0,0,0,.45) 60%,
-      rgba(0,0,0,.72) 100%),
-    linear-gradient(to top,
-      rgba(0,0,0,.62) 0%,
-      rgba(0,0,0,.28) 55%,
-      rgba(0,0,0,.18) 100%);
+      rgba(0,0,0,.12) 0%,
+      rgba(0,0,0,.48) 60%,
+      rgba(0,0,0,.76) 100%);
 }
 
+/* content */
 .hero-content{
   position:relative;
   z-index:3;
@@ -267,58 +246,123 @@ body{
   text-shadow:0 10px 30px rgba(0,0,0,.28);
 }
 
-/* stagger fade */
-.hero-title,
-.hero-subtext,
-.hero-cta{
-  opacity:0;
-  transform:translateY(3px);
-  transition:opacity 650ms ease, transform 650ms ease;
+/* alignments like inspo */
+.hero-content.align-center{
+  text-align:center;
+  max-width:760px;
+  margin:0 auto;
+}
+.hero-content.align-right{
+  text-align:left;
+  max-width:520px;
+  margin-left:auto;
+  margin-right:6%;
 }
 
-.hero-content.is-in .hero-title,
-.hero-content.is-in .hero-subtext,
-.hero-content.is-in .hero-cta{
-  opacity:1;
-  transform:translateY(0);
-}
-
-.hero-content.is-out .hero-title,
-.hero-content.is-out .hero-subtext,
-.hero-content.is-out .hero-cta{
-  opacity:0;
-  transform:translateY(3px);
-}
-
-.brand-mark h1{
-  font-size:44px;
+/* TEXT SIZES (smaller like inspo) */
+.hero-title{
+  font-size:38px;
   font-weight:500;
-  line-height:1.05;
+  line-height:1.06;
   letter-spacing:.2px;
 }
 
-.quiet{
+.hero-subtext{
   margin-top:12px;
   font-size:14px;
-  opacity:.8;
-  line-height:1.6;
+  opacity:.82;
+  line-height:1.55;
+  max-width:520px;
 }
 
-/* ✅ HERO BUTTON (combined: style + blur glass) */
+/* make the title/subtext fade in/out (NOT the button) */
+.hero-title,
+.hero-subtext{
+  opacity:0;
+  transform:translateY(4px);
+  transition:opacity 650ms ease, transform 650ms ease;
+}
+.hero-content.is-in .hero-title,
+.hero-content.is-in .hero-subtext{
+  opacity:1;
+  transform:translateY(0);
+}
+.hero-content.is-out .hero-title,
+.hero-content.is-out .hero-subtext{
+  opacity:0;
+  transform:translateY(4px);
+}
+
+/* SHOP NOW — stays fixed (no fade), cinematic blur */
 .hero-btn{
   display:inline-flex;
   align-items:center;
   justify-content:center;
   margin-top:18px;
-  padding:14px 26px;
+  padding:14px 30px;
   border-radius:999px;
-  background:rgba(255,255,255,.86);
+  background:rgba(255,255,255,.88);
   border:1px solid rgba(255,255,255,.55);
   color:#111;
   text-decoration:none;
-  box-shadow:0 14px 40px rgba(0,0,0,.20);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  font-size:14px;
+  box-shadow:0 18px 50px rgba(0,0,0,.28);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ============================= */
+/* HERO DOTS + 4.5s TIMER RING   */
+/* ============================= */
+.hero-dots{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  margin-top:14px;
+}
+
+.hero-dot{
+  width:10px;
+  height:10px;
+  border-radius:999px;
+  border:0;
+  background:rgba(255,255,255,.35);
+  position:relative;
+  cursor:pointer;
+  padding:0;
+}
+
+/* active dot filled */
+.hero-dot.active{
+  background:rgba(255,255,255,.75);
+}
+
+/* ring timer */
+.hero-dot.active::after{
+  content:"";
+  position:absolute;
+  inset:-6px;
+  border-radius:999px;
+  background:conic-gradient(rgba(255,255,255,.95) 0turn, rgba(255,255,255,0) 0turn);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 2px));
+          mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 2px));
+  animation:dotProgress 4.5s linear forwards;
+  opacity:.9;
+}
+
+@keyframes dotProgress{
+  from{ background:conic-gradient(rgba(255,255,255,.95) 0turn, rgba(255,255,255,0) 0turn); }
+  to{   background:conic-gradient(rgba(255,255,255,.95) 1turn, rgba(255,255,255,0) 1turn); }
+}
+
+/* ============================= */
+/* MOBILE TUNING                 */
+/* ============================= */
+@media (max-width: 768px){
+  .hero-title{ font-size:32px; }
+  .hero-subtext{ font-size:13px; }
+  .hero-content.align-right{ margin-right:5%; }
 }
 
 /* ============================= */
@@ -326,83 +370,6 @@ body{
 /* ============================= */
 @media (prefers-reduced-motion: reduce){
   .overlay, .drawer{ transition:none !important; }
-  .hero-bg,
-  .hero-title,
-  .hero-subtext,
-  .hero-cta{ transition:none !important; }
-}
-
-/* ============================= */
-/* MENU BACKDROP + NO SCROLL     */
-/* (needed if JS uses .menu-backdrop + .no-scroll) */
-/* ============================= */
-.menu-backdrop{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.20);
-  opacity:0;
-  pointer-events:none;
-  transition:opacity .22s ease;
-  z-index:1100;
-}
-.menu-backdrop.open{
-  opacity:1;
-  pointer-events:auto;
-}
-
-/* lock page scroll when menu opens */
-.no-scroll,
-.no-scroll body{
-  overflow:hidden !important;
-}
-
-/* ============================= */
-/* HERO DOTS (slider indicators) */
-/* ============================= */
-.hero-dots{
-  position:relative;
-  z-index:4;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  margin-top:22px;
-}
-
-.hero-dot{
-  width:8px;
-  height:8px;
-  border-radius:999px;
-  border:0;
-  background:rgba(255,255,255,.45);
-  cursor:pointer;
-  padding:0;
-  transition:transform 250ms ease, background 250ms ease, opacity 250ms ease;
-  opacity:.9;
-}
-
-.hero-dot.active{
-  background:rgba(255,255,255,.95);
-  transform:scale(1.25);
-}
-
-.hero-dot:focus-visible{
-  outline:2px solid #fff;
-  outline-offset:4px;
-}
-
-/* ============================= */
-/* HERO TYPO (mobile tuning)     */
-/* ============================= */
-@media (max-width: 480px){
-  .brand-mark h1{ font-size:36px; }
-  .quiet{ font-size:13px; }
-}
-
-/* Optional: on small screens keep text centered even on "right" slides */
-@media (max-width: 768px){
-  .hero-content.align-right{
-    text-align:center;
-    margin:0 auto;
-  }
+  .hero-bg, .hero-title, .hero-subtext{ transition:none !important; }
+  .hero-dot.active::after{ animation:none !important; }
 }
