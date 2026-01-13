@@ -52,7 +52,7 @@
       </button>
     </div>
 
-    <nav class="drawer-nav">
+    <nav class="drawer-nav" aria-label="Main menu">
       <a href="#" class="drawer-link">WHAT'S NEW</a>
       <a href="#" class="drawer-link">MEN</a>
       <a href="#" class="drawer-link">WOMEN</a>
@@ -67,16 +67,13 @@
   <main class="page">
 
     <!-- HERO -->
-    <section class="home-hero" id="homeHero">
-      <div class="hero-bg active"></div>
-      <div class="hero-bg"></div>
-      <div class="home-cine"></div>
+    <section class="home-hero" id="homeHero" aria-label="Homepage hero">
+      <div class="hero-bg active" aria-hidden="true"></div>
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="home-cine" aria-hidden="true"></div>
 
       <div class="hero-content align-center is-in" id="heroContent">
-        <h1 class="hero-title" id="heroTitle">
-          A NEW YEAR<br>WITH PRESENCE
-        </h1>
-
+        <h1 class="hero-title" id="heroTitle">A NEW YEAR<br>WITH PRESENCE</h1>
         <p class="hero-subtext" id="heroSubtext"></p>
 
         <a class="hero-btn"
@@ -85,56 +82,43 @@
           Shop Now
         </a>
 
-        <div class="hero-dots" id="heroDots"></div>
+        <div class="hero-dots" id="heroDots" aria-label="Hero slides"></div>
       </div>
     </section>
 
-    <!-- ============================= -->
-    <!-- SCROLL TO SCROLL SECTION     -->
-    <!-- ============================= -->
-    <section class="scroll-rail">
-      <header class="scroll-rail__head">
+    <!-- SCROLL TO SCROLL SECTION -->
+    <section class="scroll-rail" aria-label="Featured categories">
+      <header class="scroll-rail__head reveal">
         <h2 class="scroll-rail__title">C-LUXURY</h2>
-        <p class="scroll-rail__sub">
-          Create it. Share it. Get gifted.
-        </p>
+        <p class="scroll-rail__sub">Create it. Share it. Get gifted.</p>
       </header>
 
-      <div class="scroll-rail__track">
+      <!-- ✅ IMPORTANT: id="swipeTrack" so the inertia swipe JS connects -->
+      <div class="scroll-rail__track" id="swipeTrack">
 
-        <article class="scroll-card">
-          <img src="assets/images/hero/scroll-01.jpg" alt="">
-          <div class="scroll-card__overlay">
-            <span>Wishlist</span>
-          </div>
+        <article class="scroll-card reveal">
+          <img src="assets/images/hero/scroll-01.jpg" alt="Wishlist">
+          <div class="scroll-card__overlay"><span>Wishlist</span></div>
         </article>
 
-        <article class="scroll-card">
-          <img src="assets/images/hero/scroll-02.jpg" alt="">
-          <div class="scroll-card__overlay">
-            <span>Digital Gifts</span>
-          </div>
+        <article class="scroll-card reveal">
+          <img src="assets/images/hero/scroll-02.jpg" alt="Digital Gifts">
+          <div class="scroll-card__overlay"><span>Digital Gifts</span></div>
         </article>
 
-        <article class="scroll-card">
-          <img src="assets/images/hero/scroll-03.jpg" alt="">
-          <div class="scroll-card__overlay">
-            <span>For Her</span>
-          </div>
+        <article class="scroll-card reveal">
+          <img src="assets/images/hero/scroll-03.jpg" alt="For Her">
+          <div class="scroll-card__overlay"><span>For Her</span></div>
         </article>
 
-        <article class="scroll-card">
-          <img src="assets/images/hero/scroll-04.jpg" alt="">
-          <div class="scroll-card__overlay">
-            <span>For Him</span>
-          </div>
+        <article class="scroll-card reveal">
+          <img src="assets/images/hero/scroll-04.jpg" alt="For Him">
+          <div class="scroll-card__overlay"><span>For Him</span></div>
         </article>
 
-        <article class="scroll-card">
-          <img src="assets/images/hero/scroll-05.jpg" alt="">
-          <div class="scroll-card__overlay">
-            <span>Special Items</span>
-          </div>
+        <article class="scroll-card reveal">
+          <img src="assets/images/hero/scroll-05.jpg" alt="Special Items">
+          <div class="scroll-card__overlay"><span>Special Items</span></div>
         </article>
 
       </div>
