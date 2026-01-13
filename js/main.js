@@ -1,5 +1,9 @@
 document.documentElement.classList.remove("no-js");
 
+document.addEventListener("DOMContentLoaded", () => {
+  // rest of your existing code
+});
+
 /* =============================
    C-LUXURY main.js (FINAL - FIXED)
    ============================= */
