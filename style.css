@@ -227,3 +227,12 @@ body{
   .hero-btn{ bottom:24%; }
   .hero-dots{ bottom:18%; }
 }
+
+/* =============================
+   SAFETY FALLBACK (GitHub Pages)
+   Ensures cards show even if observer fails
+============================= */
+.scroll-card {
+  opacity: 1;
+  transform: none;
+}
