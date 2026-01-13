@@ -1,38 +1,38 @@
 /* ================================
-   C-LUXURY main.js (clean + safe)
+   C-LUXURY main.js (FINAL)
+   - Menu open/close works (X works)
+   - Hero crossfade every 4.5s
+   - Dot timer ring restarts each slide
+   - Shop Now button stays still
    ================================ */
 
 document.addEventListener("DOMContentLoaded", () => {
   /* ----------------------------
-     LOADER (hide)
-  ---------------------------- */
-  const loader = document.querySelector(".site-loader");
-  window.addEventListener("load", () => {
-    setTimeout(() => loader?.classList.add("hidden"), 700);
-  });
-
-  /* ----------------------------
-     MENU TOGGLE (simple)
-     (uses your existing .menu-panel)
+     MENU (open/close)
   ---------------------------- */
   const menuBtn = document.querySelector(".menu-toggle");
   const menuPanel = document.querySelector(".menu-panel");
-
-  // Backdrop (so you can tap outside to close)
-  let menuBackdrop = document.querySelector(".menu-backdrop");
-  if (!menuBackdrop) {
-    menuBackdrop = document.createElement("div");
-    menuBackdrop.className = "menu-backdrop";
-    document.body.appendChild(menuBackdrop);
-  }
+  const closeBtn = document.getElementById("closeMenuBtn");
+  const overlay = document.getElementById("overlay");
 
   function openMenu() {
-    menuPanel?.classList.add("open");
-    menuBackdrop?.classList.add("open");
+    if (!menuPanel) return;
+    menuPanel.classList.add("open");
+    overlay?.classList.add("open");
+    if (overlay) overlay.hidden = false;
+
+    menuBtn?.setAttribute("aria-expanded", "true");
+    menuPanel.setAttribute("aria-hidden", "false");
   }
+
   function closeMenu() {
-    menuPanel?.classList.remove("open");
-    menuBackdrop?.classList.remove("open");
+    if (!menuPanel) return;
+    menuPanel.classList.remove("open");
+    overlay?.classList.remove("open");
+    if (overlay) overlay.hidden = true;
+
+    menuBtn?.setAttribute("aria-expanded", "false");
+    menuPanel.setAttribute("aria-hidden", "true");
   }
 
   menuBtn?.addEventListener("click", () => {
@@ -40,32 +40,15 @@ document.addEventListener("DOMContentLoaded", () => {
     menuPanel.classList.contains("open") ? closeMenu() : openMenu();
   });
 
-  menuBackdrop?.addEventListener("click", closeMenu);
+  closeBtn?.addEventListener("click", closeMenu);
+  overlay?.addEventListener("click", closeMenu);
+
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeMenu();
   });
 
   /* ----------------------------
-     REVEAL ON SCROLL
-  ---------------------------- */
-  const revealEls = document.querySelectorAll(".reveal");
-  if (revealEls.length) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.15, rootMargin: "0px 0px -10% 0px" }
-    );
-    revealEls.forEach((el) => observer.observe(el));
-  }
-
-  /* ----------------------------
-     HERO SLIDER (4.5s, cinematic)
+     HERO SLIDER (4.5s)
   ---------------------------- */
   const hero = document.getElementById("homeHero");
   const bgLayers = document.querySelectorAll(".hero-bg");
@@ -74,7 +57,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const heroSubtext = document.getElementById("heroSubtext");
   const heroDotsWrap = document.getElementById("heroDots");
 
-  // ✅ MUST match your filenames exactly
+  const HOLD_MS = 4500; // ✅ your rule
+  const isMobile = () => window.matchMedia("(max-width: 768px)").matches;
+
   const HERO_SLIDES = [
     {
       image: "assets/images/hero/hero-01.jpg",
@@ -126,14 +111,11 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   ];
 
-  // Preload
+  // Preload images
   HERO_SLIDES.forEach((s) => {
     const img = new Image();
     img.src = s.image;
   });
-
-  const HOLD_MS = 4500; // ✅ your rule
-  const isMobile = () => window.matchMedia("(max-width: 768px)").matches;
 
   let heroCurrent = 0;
   let activeBg = 0;
@@ -145,22 +127,14 @@ document.addEventListener("DOMContentLoaded", () => {
       heroTimer = null;
     }
   }
+
   function startHeroAuto() {
     stopHeroAuto();
     heroTimer = setInterval(() => {
       heroCurrent = (heroCurrent + 1) % HERO_SLIDES.length;
       applyHeroSlide(heroCurrent);
-      updateActiveDot();
+      updateActiveDot(true);
     }, HOLD_MS);
-  }
-
-  function setTextOut() {
-    heroContent?.classList.remove("is-in");
-    heroContent?.classList.add("is-out");
-  }
-  function setTextIn() {
-    heroContent?.classList.remove("is-out");
-    heroContent?.classList.add("is-in");
   }
 
   function setAlign(mode) {
@@ -169,8 +143,19 @@ document.addEventListener("DOMContentLoaded", () => {
     heroContent.classList.add(mode === "right" ? "align-right" : "align-center");
   }
 
+  function setTextOut() {
+    heroContent?.classList.remove("is-in");
+    heroContent?.classList.add("is-out");
+  }
+
+  function setTextIn() {
+    heroContent?.classList.remove("is-out");
+    heroContent?.classList.add("is-in");
+  }
+
   function renderHeroDots() {
     if (!heroDotsWrap) return;
+
     heroDotsWrap.innerHTML = HERO_SLIDES.map((_, i) => {
       return `<button class="hero-dot ${i === heroCurrent ? "active" : ""}" type="button" aria-label="Hero slide ${i + 1}"></button>`;
     }).join("");
@@ -179,16 +164,29 @@ document.addEventListener("DOMContentLoaded", () => {
       dot.addEventListener("click", () => {
         heroCurrent = i;
         applyHeroSlide(heroCurrent);
-        updateActiveDot();
+        updateActiveDot(true);
         startHeroAuto();
       });
     });
   }
 
-  function updateActiveDot() {
+  // restartRing=true forces CSS animation restart on active dot
+  function updateActiveDot(restartRing = false) {
     if (!heroDotsWrap) return;
+
     heroDotsWrap.querySelectorAll(".hero-dot").forEach((d, i) => {
-      d.classList.toggle("active", i === heroCurrent);
+      const shouldBeActive = i === heroCurrent;
+
+      // remove first (so the ring animation can restart)
+      d.classList.remove("active");
+
+      if (shouldBeActive) {
+        if (restartRing) {
+          // force reflow
+          void d.offsetWidth;
+        }
+        d.classList.add("active");
+      }
     });
   }
 
@@ -230,14 +228,11 @@ document.addEventListener("DOMContentLoaded", () => {
     heroSubtext.innerHTML = HERO_SLIDES[0].text || "";
 
     renderHeroDots();
+    updateActiveDot(true);
     setTextIn();
     startHeroAuto();
 
-    // pause on hover desktop
-    hero.addEventListener("mouseenter", stopHeroAuto);
-    hero.addEventListener("mouseleave", startHeroAuto);
-
-    // resize keeps positioning
+    // keep positions correct on resize
     window.addEventListener("resize", () => {
       const slide = HERO_SLIDES[heroCurrent];
       bgLayers.forEach((layer) => {
@@ -247,12 +242,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ----------------------------
-     CART COUNT (won’t crash)
-     (GitHub pages can't read Shopify cart due to CORS; default 0)
+     SEARCH BUTTON (Shopify search)
+     (opens Shopify search page)
   ---------------------------- */
-  const cartCountEl = document.getElementById("cartCount");
-  if (cartCountEl) {
-    cartCountEl.textContent = "0";
-    cartCountEl.classList.add("is-empty");
-  }
+  const searchBtn = document.getElementById("searchBtn");
+  searchBtn?.addEventListener("click", () => {
+    window.open("https://mrcharliestxs.myshopify.com/search", "_blank", "noopener");
+  });
 });
