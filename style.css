@@ -1,6 +1,6 @@
 /* =============================
    C-LUXURY — FINAL style.css
-   (Menu + Hero slider + 4.5s timer dots)
+   (Menu + Hero slider + fixed CTA + fixed dots + 4.5s timer ring)
    Matches your index.html + main.js
    ============================= */
 
@@ -21,7 +21,7 @@ body{
   overflow-x:hidden;
 }
 
-/* ✅ Correct no-scroll lock (your JS should toggle: document.documentElement.classList.add/remove("no-scroll")) */
+/* optional scroll lock if you later toggle html.no-scroll */
 html.no-scroll,
 html.no-scroll body{
   overflow:hidden;
@@ -40,7 +40,7 @@ html.no-scroll body{
   justify-content:space-between;
   background:#fff;
   border-bottom:1px solid #eee;
-  z-index:2100; /* ✅ above overlay + drawer */
+  z-index:2100;
 }
 
 .brand{
@@ -97,7 +97,7 @@ html.no-scroll body{
   opacity:0;
   pointer-events:none;
   transition:opacity .22s ease;
-  z-index:1900; /* ✅ below drawer */
+  z-index:1900;
 }
 
 .overlay.open{
@@ -114,7 +114,7 @@ html.no-scroll body{
   background:#fff;
   transform:translateX(100%);
   transition:transform .28s ease;
-  z-index:2000; /* ✅ above overlay */
+  z-index:2000;
   border-left:1px solid #eee;
   will-change:transform;
 }
@@ -198,12 +198,7 @@ html.no-scroll body{
 .home-hero{
   position:relative;
   min-height:calc(100vh - 80px);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:60px 18px 70px;
   overflow:hidden;
-  text-align:center;
 }
 
 /* 2-layer crossfade backgrounds */
@@ -217,10 +212,9 @@ html.no-scroll body{
   transition:opacity 650ms ease-in-out;
   z-index:0;
 }
-
 .hero-bg.active{ opacity:1; }
 
-/* darker cinematic layer */
+/* gradient */
 .home-hero::after{
   content:"";
   position:absolute;
@@ -235,47 +229,52 @@ html.no-scroll body{
   );
 }
 
-/* extra cinematic overlay */
+/* cinematic overlay */
 .home-cine{
   position:absolute;
   inset:0;
   z-index:2;
   pointer-events:none;
-  background:
-    radial-gradient(120% 90% at 50% 40%,
-      rgba(0,0,0,.12) 0%,
-      rgba(0,0,0,.48) 60%,
-      rgba(0,0,0,.76) 100%);
+  background:radial-gradient(120% 90% at 50% 40%,
+    rgba(0,0,0,.12) 0%,
+    rgba(0,0,0,.48) 60%,
+    rgba(0,0,0,.76) 100%);
 }
 
-/* content layer */
+/* IMPORTANT FIX:
+   Make hero-content fill the hero, so button + dots can be positioned with bottom: */
 .hero-content{
   position:relative;
   z-index:3;
+  height:calc(100vh - 80px);
+  padding:56px 18px;
   color:#fff;
   text-shadow:0 10px 30px rgba(0,0,0,.28);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
 }
 
-/* alignments like inspo */
+/* alignments */
 .hero-content.align-center{
   text-align:center;
-  max-width:760px;
-  margin:0 auto;
 }
-
 .hero-content.align-right{
   text-align:left;
+  align-items:flex-start;
   max-width:520px;
   margin-left:auto;
   margin-right:6%;
 }
 
-/* TEXT SIZES (smaller like inspo) */
+/* text sizes */
 .hero-title{
-  font-size:38px;
+  font-size:36px;
   font-weight:500;
   line-height:1.06;
   letter-spacing:.2px;
+  max-width:760px;
 }
 
 .hero-subtext{
@@ -286,55 +285,71 @@ html.no-scroll body{
   max-width:520px;
 }
 
-/* Fade ONLY title + subtext (Shop Now stays still) */
+/* Fade title + subtext + dots ONLY (button stays still) */
 .hero-title,
-.hero-subtext{
+.hero-subtext,
+.hero-dots{
   opacity:0;
   transform:translateY(4px);
   transition:opacity 650ms ease, transform 650ms ease;
 }
 
 .hero-content.is-in .hero-title,
-.hero-content.is-in .hero-subtext{
+.hero-content.is-in .hero-subtext,
+.hero-content.is-in .hero-dots{
   opacity:1;
   transform:translateY(0);
 }
 
 .hero-content.is-out .hero-title,
-.hero-content.is-out .hero-subtext{
+.hero-content.is-out .hero-subtext,
+.hero-content.is-out .hero-dots{
   opacity:0;
   transform:translateY(4px);
 }
 
-/* SHOP NOW — stays fixed (no fade), cinematic blur */
+/* ============================= */
+/* SHOP NOW (fixed lower)        */
+/* ============================= */
 .hero-btn{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:22%;                /* ✅ move here (lower = 18%, higher = 26%) */
+
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  margin-top:18px;
   padding:14px 30px;
   border-radius:999px;
-  background:rgba(255,255,255,.88);
-  border:1px solid rgba(255,255,255,.55);
-  color:#111;
+
+  /* cinematic dark glass */
+  background:rgba(255,255,255,.16);
+  border:1px solid rgba(255,255,255,.28);
+  color:#fff;
+
   text-decoration:none;
   font-size:14px;
-  box-shadow:0 18px 50px rgba(0,0,0,.28);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  box-shadow:0 18px 50px rgba(0,0,0,.35);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
 /* ============================= */
-/* HERO DOTS + 4.5s TIMER RING   */
+/* DOTS fixed under button       */
 /* ============================= */
 .hero-dots{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:16%;               /* ✅ dots under the button */
   display:flex;
   align-items:center;
   justify-content:center;
   gap:10px;
-  margin-top:14px;
 }
 
+/* dot base */
 .hero-dot{
   width:10px;
   height:10px;
@@ -346,12 +361,11 @@ html.no-scroll body{
   padding:0;
 }
 
-/* active dot filled */
 .hero-dot.active{
-  background:rgba(255,255,255,.75);
+  background:rgba(255,255,255,.78);
 }
 
-/* ring timer (restarts when JS re-adds .active) */
+/* ring timer 4.5s */
 .hero-dot.active::after{
   content:"";
   position:absolute;
@@ -361,7 +375,7 @@ html.no-scroll body{
   -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 2px));
           mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 2px));
   animation:dotProgress 4.5s linear forwards;
-  opacity:.9;
+  opacity:.95;
 }
 
 @keyframes dotProgress{
@@ -370,11 +384,15 @@ html.no-scroll body{
 }
 
 /* ============================= */
-/* MOBILE TUNING                 */
+/* MOBILE                        */
 /* ============================= */
 @media (max-width: 768px){
-  .hero-title{ font-size:32px; }
+  .hero-title{ font-size:30px; }
   .hero-subtext{ font-size:13px; }
+
+  .hero-btn{ bottom:24%; }
+  .hero-dots{ bottom:18%; }
+
   .hero-content.align-right{ margin-right:5%; }
 }
 
@@ -383,6 +401,6 @@ html.no-scroll body{
 /* ============================= */
 @media (prefers-reduced-motion: reduce){
   .overlay, .drawer{ transition:none !important; }
-  .hero-bg, .hero-title, .hero-subtext{ transition:none !important; }
+  .hero-bg, .hero-title, .hero-subtext, .hero-dots{ transition:none !important; }
   .hero-dot.active::after{ animation:none !important; }
 }
