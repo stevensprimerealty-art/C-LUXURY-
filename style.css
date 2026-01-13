@@ -1,18 +1,14 @@
 /* =============================
    C-LUXURY — FINAL style.css
    (Menu + Hero slider + fixed CTA + fixed dots + 4.5s timer ring
-    + Apple-like swipe section + scroll reveal cards)
-   Matches your index.html + main.js
+    + Apple-like swipe section + scroll reveal)
+   Matches index.html + js/main.js
    ============================= */
 
-/* ============================= */
-/* RESET                         */
-/* ============================= */
+/* RESET */
 *{ margin:0; padding:0; box-sizing:border-box; }
 
-/* ============================= */
-/* BASE                          */
-/* ============================= */
+/* BASE */
 html, body{ height:100%; }
 
 body{
@@ -22,15 +18,13 @@ body{
   overflow-x:hidden;
 }
 
-/* optional scroll lock if you later toggle html.no-scroll */
+/* optional scroll lock */
 html.no-scroll,
 html.no-scroll body{
   overflow:hidden;
 }
 
-/* ============================= */
-/* HEADER                        */
-/* ============================= */
+/* HEADER */
 .site-header{
   position:fixed;
   top:0; left:0; right:0;
@@ -72,25 +66,17 @@ html.no-scroll body{
   text-decoration:none;
 }
 
-.icon-btn svg{
-  width:22px;
-  height:22px;
-  fill:#111;
-}
+.icon-btn svg{ width:22px; height:22px; fill:#111; }
 
 .icon-btn:focus-visible{
   outline:2px solid #111;
   outline-offset:3px;
 }
 
-/* ============================= */
-/* PAGE                          */
-/* ============================= */
+/* PAGE */
 .page{ padding-top:80px; }
 
-/* ============================= */
-/* OVERLAY + DRAWER (MENU)       */
-/* ============================= */
+/* OVERLAY + DRAWER */
 .overlay{
   position:fixed;
   inset:0;
@@ -136,7 +122,6 @@ html.no-scroll body{
   letter-spacing:3px;
   text-transform:uppercase;
   font-size:16px;
-  opacity:1;
 }
 
 .close-btn{
@@ -179,30 +164,13 @@ html.no-scroll body{
   font-size:20px;
 }
 
-.drawer-footer{ padding:18px; }
-
-.drawer-login{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  text-decoration:none;
-  color:#111;
-  font-size:14px;
-  padding:14px 0;
-}
-
-.user-ico{ font-size:18px; }
-
-/* ============================= */
-/* HERO SLIDER                   */
-/* ============================= */
+/* HERO */
 .home-hero{
   position:relative;
   min-height:calc(100vh - 80px);
   overflow:hidden;
 }
 
-/* 2-layer crossfade backgrounds */
 .hero-bg{
   position:absolute;
   inset:0;
@@ -215,7 +183,6 @@ html.no-scroll body{
 }
 .hero-bg.active{ opacity:1; }
 
-/* gradient */
 .home-hero::after{
   content:"";
   position:absolute;
@@ -230,7 +197,6 @@ html.no-scroll body{
   );
 }
 
-/* cinematic overlay */
 .home-cine{
   position:absolute;
   inset:0;
@@ -242,7 +208,6 @@ html.no-scroll body{
     rgba(0,0,0,.76) 100%);
 }
 
-/* Make hero-content fill hero for fixed CTA + fixed dots */
 .hero-content{
   position:relative;
   z-index:3;
@@ -257,9 +222,7 @@ html.no-scroll body{
 }
 
 /* alignments */
-.hero-content.align-center{
-  text-align:center;
-}
+.hero-content.align-center{ text-align:center; }
 .hero-content.align-right{
   text-align:left;
   align-items:flex-start;
@@ -268,7 +231,6 @@ html.no-scroll body{
   margin-right:6%;
 }
 
-/* text sizes */
 .hero-title{
   font-size:36px;
   font-weight:500;
@@ -285,7 +247,7 @@ html.no-scroll body{
   max-width:520px;
 }
 
-/* Fade title + subtext + dots ONLY (button stays still) */
+/* Fade title + subtext + dots ONLY */
 .hero-title,
 .hero-subtext,
 .hero-dots{
@@ -308,26 +270,20 @@ html.no-scroll body{
   transform:translateY(4px);
 }
 
-/* ============================= */
-/* SHOP NOW (fixed position)     */
-/* ============================= */
+/* CTA fixed position */
 .hero-btn{
   position:absolute;
   left:50%;
   transform:translateX(-50%);
   bottom:22%;
-
   display:inline-flex;
   align-items:center;
   justify-content:center;
   padding:14px 30px;
   border-radius:999px;
-
-  /* cinematic dark glass */
   background:rgba(255,255,255,.16);
   border:1px solid rgba(255,255,255,.28);
   color:#fff;
-
   text-decoration:none;
   font-size:14px;
   box-shadow:0 18px 50px rgba(0,0,0,.35);
@@ -335,7 +291,6 @@ html.no-scroll body{
   -webkit-backdrop-filter: blur(14px);
 }
 
-/* subtle CTA hover (desktop only) */
 @media (hover:hover){
   .hero-btn:hover{
     transform:translateX(-50%) translateY(-2px);
@@ -343,9 +298,7 @@ html.no-scroll body{
   }
 }
 
-/* ============================= */
-/* DOTS fixed under button       */
-/* ============================= */
+/* DOTS fixed under button */
 .hero-dots{
   position:absolute;
   left:50%;
@@ -368,11 +321,8 @@ html.no-scroll body{
   padding:0;
 }
 
-.hero-dot.active{
-  background:rgba(255,255,255,.78);
-}
+.hero-dot.active{ background:rgba(255,255,255,.78); }
 
-/* ring timer 4.5s */
 .hero-dot.active::after{
   content:"";
   position:absolute;
@@ -390,9 +340,7 @@ html.no-scroll body{
   to{   background:conic-gradient(rgba(255,255,255,.95) 1turn, rgba(255,255,255,0) 1turn); }
 }
 
-/* ============================= */
 /* BELOW HERO — Apple-like swipe */
-/* ============================= */
 .scroll-rail{
   padding: 28px 18px 44px;
   background:#fff;
@@ -418,18 +366,15 @@ html.no-scroll body{
   color:#111;
 }
 
-/* horizontal swipe track */
+/* swipe track */
 .scroll-rail__track{
   display:flex;
   gap:14px;
-
   overflow-x:auto;
   overflow-y:hidden;
 
-  /* Apple/iOS inertia */
   -webkit-overflow-scrolling: touch;
 
-  /* snap */
   scroll-snap-type:x mandatory;
   scroll-padding-left: 18px;
 
@@ -440,10 +385,16 @@ html.no-scroll body{
   overscroll-behavior-x: contain;
 
   scrollbar-width: none;
+  cursor: grab;
 }
 .scroll-rail__track::-webkit-scrollbar{ height:0; }
 
-/* swipe cards */
+.scroll-rail__track.is-dragging{
+  cursor: grabbing;
+  user-select:none;
+}
+
+/* cards */
 .scroll-card{
   flex:0 0 auto;
   width:min(78vw, 340px);
@@ -455,16 +406,6 @@ html.no-scroll body{
 
   background:#0b0b0b;
   box-shadow:0 22px 60px rgba(0,0,0,.18);
-
-  /* reveal default state (JS adds .is-in) */
-  opacity:0;
-  transform:translateY(12px) scale(.98);
-  transition: transform 600ms ease, opacity 600ms ease;
-}
-
-.scroll-card.is-in{
-  opacity:1;
-  transform:translateY(0) scale(1);
 }
 
 .scroll-card img{
@@ -509,7 +450,19 @@ html.no-scroll body{
   letter-spacing:.4px;
 }
 
-/* subtle hover (desktop only) */
+/* ✅ SCROLL REVEAL (matches JS: .reveal + .is-visible) */
+.reveal{
+  opacity:0;
+  transform:translateY(12px);
+  transition: transform 600ms ease, opacity 600ms ease;
+}
+
+.reveal.is-visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* subtle hover */
 @media (hover:hover){
   .scroll-card:hover{
     transform:translateY(-6px) scale(1.01);
@@ -517,9 +470,7 @@ html.no-scroll body{
   }
 }
 
-/* ============================= */
-/* MOBILE                        */
-/* ============================= */
+/* MOBILE */
 @media (max-width: 768px){
   .hero-title{ font-size:30px; }
   .hero-subtext{ font-size:13px; }
@@ -528,16 +479,13 @@ html.no-scroll body{
   .hero-dots{ bottom:18%; }
 
   .hero-content.align-right{ margin-right:5%; }
-
   .scroll-card{ width:82vw; border-radius:20px; }
 }
 
-/* ============================= */
-/* REDUCED MOTION                */
-/* ============================= */
+/* REDUCED MOTION */
 @media (prefers-reduced-motion: reduce){
   .overlay, .drawer{ transition:none !important; }
   .hero-bg, .hero-title, .hero-subtext, .hero-dots{ transition:none !important; }
   .hero-dot.active::after{ animation:none !important; }
-  .scroll-card{ transition:none !important; }
+  .reveal{ transition:none !important; }
 }
